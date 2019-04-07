@@ -1,13 +1,25 @@
 \documentclass[11pt]{article}
 
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
 \usepackage[italian]{babel}
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{hyperref}
 \usepackage{listings}
 \usepackage[margin=1.2in]{geometry}
-\usepackage[utf8]{inputenc}
+
+\usepackage{xcolor}
+
+\lstdefinelanguage{sparql}{
+  morecomment=[l][\color{purple}]{\#},
+  morestring=[b][\color{blue}]\",
+  morekeywords={SELECT,CONSTRUCT,DESCRIBE,ASK,WHERE,FROM,NAMED,PREFIX,BASE,OPTIONAL,FILTER,ORDER,BY,GRAPH,LIMIT,OFFSET,SERVICE,UNION,EXISTS,NOT,BINDINGS,MINUS,a},
+  sensitive=true
+}
+
 \counterwithin*{section}{part}
+\graphicspath{ {./img/} }
 
 % lunedì        10:30-12:30 U14/T024 (U14/1)
 % mercoledì     10:30-13:30 U14/T024 (U14/1)
@@ -41,28 +53,31 @@
 
 \newpage
 % titolo provvisorio
-\part{Grafi di conoscenza}
+\part{Grafi di conoscenza ed introduzione ai concetti}
 % non mi sembra molto coeso il discorso: correggere
-Il termine è coniato da Google per indicare uno strumento usato dal suo motore di ricerca per fornire informazioni aggiuntive durante le ricerche.
+Il termine "grafo di conoscenza" è stato coniato da Google per indicare uno strumento usato dal suo motore di ricerca per fornire informazioni aggiuntive durante le interrogazioni.
 La struttura a grafo permette di essere processata facilmente da una macchina e allo stesso tempo garantisce un livello di astrazione soddisfacente; si possono anche effettuare query come in un database a grafo (Neo4j).
 Il modello a grafo permette inoltre una facile integrazione di sorgenti diverse rendendo naturali collegamenti e relazioni.
-Il web \textit{semantico} ha costruito linguaggi e strumenti, approvati dal W3C, per definire, interrogare e fare inferenza su grafi di conoscenza; tuttavia nel mondo reale questi strumenti non hanno largo utilizzo.
-La costruzione di grafi di conoscenza è spesso effettuata a mano da una moltitudine di utenti (chiedendo recensioni tramite \textit{app}).
 
+Il web \textit{semantico} ha costruito linguaggi e strumenti, approvati dal W3C, per definire, interrogare e fare inferenza su grafi di conoscenza; tuttavia nel mondo reale questi strumenti non hanno largo utilizzo.
+La costruzione di grafi di conoscenza è spesso effettuata a mano da una moltitudine di utenti (chiedendo recensioni tramite \textit{app}, ad esempio).
 Internet produce enormi quantità di dati diversi tra di loro, usati spesso per altri fini: la semantica dei dati si occupa di integrare grandi quantità (\textit{data volume}) da diverse fonti di dati (\textit{data variety}).
 Tali dati possono essere sfruttati nella costruzione di intelligenze artificiali, ovvero di programmi che eseguono task tipicamente umani con risultati simili.
 In particolare è così possibile effettuare compiti particolarmente ardui per un umano, come l'integrazione di serie storiche con fonti multiple appartenenti a domini vari o poco noti.
 
-Esistono grafi di conoscenza \textit{open}, quali DBpedia, Yago o Wikidata, ma alcune aziende private sviluppano il proprio grafo per facilitare l'attività imprenditoriale.
+Esistono inoltre grafi di conoscenza \textit{open}, quali DBpedia, Yago o Wikidata, ma alcune aziende private, oppure anche organizzazioni ed istituzioni, sviluppano il proprio grafo per facilitare l'attività imprenditoriale o di gestione del proprio DB.
+\newline
+\newline
+\begin{itshape}
+\textbf{Introduzione al principio matematico: Lo spazio vettoriale}
+\end{itshape}
 
-
-\section{Spazio vettoriale.}
-In un grafo di conoscenza, query e documenti sono interpretabili come vettori (in un sistema tradizionale di information retrieval si agisce attraverso un modello matematico, il \textit{il term document matrix} in cui ogni cella ci dice se le parole ricorrono o meno nel documento): è possibile calcolare misure di distanza come la \textit{distanza euclidea} oppure calcolare misure di similarità come la \textit{distanza coseno}.
+In un grafo di conoscenza, query e documenti sono interpretabili come vettori (in un sistema tradizionale di information retrieval si agisce attraverso un modello matematico, il \textit{term document matrix} in cui ogni cella ci dice se le parole ricorrono o meno nel documento): è possibile calcolare misure di distanza come la \textit{distanza euclidea} oppure calcolare misure di similarità come la \textit{distanza coseno}.
 \begin{align*}
   sim(r, u) &= cos(\theta) \\
             &= \frac{u q}{|u| |q|}
   \end{align*}
-La rappresentazione vettoriale è alla base dell'analisi testuale.
+La rappresentazione vettoriale è \textit{alla base} dell'analisi testuale.
 Mentre in passato si sfruttavano sistemi basati essenzialmente sulla presenza-assenza di una parola e quindi sui valori $0$ e $1$ oggi si usa un sistema di pesi più sofisticato per valutare diversamente l'importanza di una parola all'interno di un documento, quindi con valori \textit{compresi} tra $0$ e $1$.
 Una parola è tanto più importante nel documento quante più ricorrenze ci sono nel documento e meno per quante ricorrenze ha negli altri documenti (in percentuale).
 \begin{align*}
@@ -71,25 +86,26 @@ Una parola è tanto più importante nel documento quante più ricorrenze ci sono
   tfidf_{i, j} &= tf_{i, j} \times idf_i
 \end{align*}
 
-Le entità, le loro proprietà e i collegamenti tra di loro sono iscritti nel grafo di conoscenza. I grafi di conoscenza sono basi di conoscenza che suppportano task di data analytics perchè possiedono un contesto ricco, servizi di collegamento e supportano accesso via web; inoltre rappresentano l'astrazione più importante per la data semantics 
+Le entità, le loro proprietà e i collegamenti tra di loro sono iscritti nel grafo di conoscenza. I grafi di conoscenza sono basi di conoscenza che suppportano task di data analytics perchè possiedono un contesto ricco, servizi di collegamento e supportano accesso via web; inoltre rappresentano l'astrazione più importante per la data semantics.
 Esistono linguaggi formali, definiti a inizio '900, che permettono di dichiarare relazioni tra entità ma che non sono leggibili da una macchina.
 Inoltre si possono usare assiomi logici per definire le ricorrenze nel testo.
+\newline
+\newline
+\begin{itshape}
+\textbf{Linking Data}
+\end{itshape}
 
+I dati sono spesso collegati in modo autonomo grazie a programmi di apprendimento automatico.
+Una ricerca su internet non è fatta più fatta per documenti, come accadeva nei primi anni 2000, ma per contenuti: un motore di ricerca in passato offriva una serie di documenti senza offrire informazioni aggiuntive; oggi invece tenta direttamente di rispondere con \textit{factual information} rilevanti nella ricerca attraverso delle schede.
 
-\section{\textit{Linking Data}.}
-I dati sono spesso collegati in modo automatico grazie a programmi di apprendimento automatico.
-Una ricerca su internet non è fatta per documenti ma per contenuti: un motore di ricerca in passato offriva una serie di documenti senza offrire informazioni aggiuntive; oggi invece un motore di ricerca tenta direttamente di rispondere con \textit{factual information} rilevanti nella ricerca attraverso delle schede.
 Per \textit{informazione fattuale} si intende un'informazione interpretabile come vera o falsa (al contrario, alcuni dati quali immagini o suoni non sono interpretabili per veridicità).
 I fatti costituiscono un elemento centrale per l'analisi.
-
 Le risposte fattuali sono personalizzate in base alla natura della ricerca, secondo criteri \textit{data driven} (ovvero statistici).
 Informazioni di tipo diverso hanno caratteristiche diverse: si produce un grafo di conoscenza per gestire meglio entità di tipo diverso con caratteristiche peculiari diverse.
-Le \textit{preview} dei contenuti sono generate chiedendo agli sviluppatori di inserire dei contenuti nel codice HTML che sono poi interpretati dal motore di ricerca.
-
-I chatbot sono costruiti con l'ausilio di reti neurali e rappresentazioni del mondo reale.
+Le \textit{preview} dei contenuti sono generate chiedendo agli sviluppatori di inserire dei contenuti nel codice HTML che sono poi interpretati dal motore di ricerca. I chatbot, ad esempio, sono costruiti con l'ausilio di reti neurali e rappresentazioni del mondo reale.
 
 
-\section{Standard.}
+\section{Lo standard per il \textit{web semantico}}
 RDF (\textit{Resource Description Framework}) è il linguaggio standrad per il web semantico, ovvero per \textit{l'internet elaborabile dalle macchine}.
 L'unità base per rappresentare l'informazione è rappresentata da triple (affermazioni), ovvero grafi etichettati, identificati da URI (\textit{Unique Resource Identifier}).
 Esempi di triple sono:
@@ -113,9 +129,9 @@ Tutti gli URI sono risorse, e rappresentano l'ontologia del dominio.
 
 Le triple sono strutturate con un \textbf{soggetto}, un \textbf{predicato} e un \textbf{oggetto} (Turtle syntax).
 Il soggetto è composto da un URI o da un \textit{blank node} (ovvero costanti \textit{locali}), il predicato può essere composto solo da un URI mentre gli oggetti possono essere URI, \textit{blank nodes} oppure letterali, che possono essere \textit{plain literal}, ovvero letterali puri, oppure \textit{typed literal}, a cui è attribuito un tipo (stringhe, date o booleani) per permettere operazioni.
-I \textit{blank node} sono nodi anonimi per consentire una buona costruzione del grafo.
+I \textit{blank nodes} sono nodi anonimi per consentire una buona costruzione del grafo.
 
-\subsection{Pubblicazione.}
+\subsection{Best practices in pubblicazione}
 I \textit{linked data} riassumono delle best practices per pubblicare e unire dati provenienti dal web:
 \begin{itemize}
   \item usare URI come nomi delle cose;
@@ -123,24 +139,25 @@ I \textit{linked data} riassumono delle best practices per pubblicare e unire da
   \item inserire informazioni utili su un URI;
   \item includere link ad altri URI.
 \end{itemize}
-Sono solamente una serie di principi, non rendono i dati \textit{open} (\textit{Linked Open Data}). \newline
+Sono solamente una serie di principi, non rendono i dati \textit{open} (\textit{Linked Open Data}).
+\newline
 
 Altro approccio per pubblicare i dati sul web è usare l'\textit{annotazione semantica}: si inseriscono annotazioni (tag) in una pagina web che specifichino il significato del contenuto o altri meta-dati per permettere e facilitare l'elaborazione dei contenuti da parte di agenti intelligenti.
 La sintassi è simile a XML: RDF in precedenza usava il formato XML, non Turtle, ma è stato abbandonato per la sua struttura ad albero in favore di una struttura a grafo.
 L'approccio è tornato in auge grazie ai \textit{crawler}: dei motori di ricerca che annotano le pagine in base al loro significato semantico\footnote{\url{https://webdatacommons.org} è un archivio di crawl trovati sul web.}.
 
-Non tutti i formati sono compatibili con RDF (Microdata e hCard non lo sono) mentre altri sì (RDFa, JSON-LD); nonostante questo non ci sono differenze significative tra i vari formati (il modello è il medesimo).
-
-hCard e vCard sono basati su HTML, ponendo delle convenzioni su come gestire le informazioni. \newline
-I microdati usano tag speciali introdotti in HTML5 per definire \textit{itemscope}, \textit{itemtype} e \textit{itempropriety}: si definisce (\textit{itemscope}) un oggetto di un certo tipo (\textit{itemtype}) con determinate proprietà (\textit{itemprop}), che in RDF si inseriscono tramite \textit{blank node}.
+Non tutti i formati sono compatibili con RDF (Microdata ed hCard non lo sono) mentre altri sì (RDFa, JSON-LD); nonostante questo non ci sono differenze significative tra i vari formati (il modello è il medesimo):
+\begin{itemize}
+\item hCard e vCard sono basati su HTML, ponendo delle convenzioni su come gestire le informazioni;
+\item I cosiddetti Microdata usano tag speciali introdotti in HTML5 per definire \textit{itemscope}, \textit{itemtype} e \textit{itempropriety}: si definisce (\textit{itemscope}) un oggetto di un certo tipo (\textit{itemtype}) con determinate proprietà (\textit{itemprop}), che in RDF si inseriscono tramite \textit{blank nodes}.
 I microdati sono parti di codice integrate dentro al testo, visualizzabili solamente nel codice sorgente.
-Si usano dei tipi definiti da vocabolari\footnote{\url{https://schema.org/} è un dizionario che definisce in modo non eccessivamente prescrittivo oggetti e proprietà.}, utilizzabili anche in RDF, adottati come standard. \newline
-RDFa specifica all'inizio il vocabolario adottato, mentre il codice rimane scritto in HTML. \newline
+Si usano dei tipi definiti da vocabolari\footnote{\url{https://schema.org/} è un dizionario che definisce in modo non eccessivamente prescrittivo oggetti e proprietà.}, utilizzabili anche in RDF, adottati come standard;
+\item RDFa specifica all'inizio il vocabolario adottato, mentre il codice rimane scritto in HTML;
 JSON-LD (JSON \textit{Linked Data}) integra un file \verb|.json| (in un tag \verb|<script>|) in una pagina HTML per attribuire significati semantici.
 Non si ha bisogno di un parser apposito, e le triple sono facilmente ricostruibili a partire dalla pagina web.
 I motori di ricerca, processando in modo automatico, mostrano il contenuto in base al significato semantico.
-
-\section{SPARQL.}
+\end{itemize}
+\subsection{RDF query language: SPARQL}
 Introdotto come linguaggio per interrogare \textit{linked data}, è un linguaggio simile a SQL caratterizzato (dalla versione 1.1) da quattro elementi:
 \begin{itemize}
   \item SPARQL Query;
@@ -148,25 +165,28 @@ Introdotto come linguaggio per interrogare \textit{linked data}, è un linguaggi
   \item SPARQL Update;
   \item SPARQL Protocol.
 \end{itemize}
-Permette di interrogare (query), modificare (update) e integrare (federated) database composti da triple. Il principio di SPARQL è quello di \textit{pattern matching}, ovvero le query descrivono sottografi del grafo principale e quelli che matchano rappresentano i risultati.
+Permette di interrogare (query), modificare (update) e integrare database (effettuare cioè federated query) composti da triple. Il principio di SPARQL è quello di \textit{pattern matching}, ovvero le query descrivono sottografi del grafo principale e quelli che matchano rappresentano i risultati.
 Si definisce il concetto di \textit{triple pattern}: si sostituiscono uno o più elementi di una tripla con una variabile.
-\begin{verbatim}
-dbpedia:The_Beatles foaf:name "The Beatles" . # importante il punto alla fine
+\begin{lstlisting}[language=sparql]
+                             # importante il punto alla fine
+dbpedia:The_Beatles foaf:name "The Beatles" .
 dbpedia:The_Beatles foaf:name ?album .
 ?album mo:track ?track .
 ?album ?p ?o .
-\end{verbatim}
+\end{lstlisting}
 % musicbrainz.org
 
 Si possono così costruire query strutturate.
-\begin{verbatim}
+\begin{lstlisting}[language=sparql]
 # prologo: si definiscono le fonti
 PREFIX dbpedia:<http://dbpedia.org/resource/>
 PREFIX foaf:<http://xmlns.com/foaf/0.1/>
 ...
-
-# query di tipo SELECT
+\end{lstlisting}
+Esistono diversi tipi di query effettuabili in SPARQL:
+\begin{lstlisting}[language=sparql]
 # ASK | SELECT | DESCRIBE | CONSTRUCT
+# Query di tipo SELECT
   SELECT ?album
     FROM <http://musicbrainz.org/20130302/>
    WHERE {
@@ -177,37 +197,38 @@ PREFIX foaf:<http://xmlns.com/foaf/0.1/>
            dc:title ?title .
          }
 ORDER BY ?title
-\end{verbatim}
+\end{lstlisting}
 
 \verb|ASK| ritorna \verb|true|/\verb|false| se esiste una soluzione alla query:
-\begin{verbatim}
+\begin{lstlisting}[language=sparql]
   ASK
 WHERE {
         dbpedia:The_Beatles mo:member .
         dbpedia:Paul_McCartney .
       }
-
-=> true
-\end{verbatim}
-
+\end{lstlisting}
+\verb|=> true| \newline
 \verb|SELECT| ritorna una lista di elementi che hanno corrispondenza nel grafo:
-\begin{verbatim}
+\begin{lstlisting}[language=sparql]
 SELECT ?album_name ?track_title
        ?date       ?album       .
  WHERE {
-         dbpedia:The_Beatles foaf:name ?album .             # tutti gli album
-                                                            # dei Beatles
+         # tutti gli album dei Beatles
+         dbpedia:The_Beatles foaf:name ?album .
+
+         # tutte le tracce degli album
          ?album              dc:title  ?album;
-         mo:track ?track .                                  # tutte le tracce
-                                                            # degli album
+         mo:track ?track .
          ?track            dc:title  ?track_title;
+
+         # filtra per durata
          mo:duration ?duration .
-         FILTER (?duration > 300000 && ?duration < 400000)  # filtra per durata
+         FILTER (?duration > 300000 && ?duration < 400000)
        }
-\end{verbatim}
+\end{lstlisting}
 
 \verb|CONSTRUCT| è simile a \verb|SELECT| ma ritorna un grafo e non una lista:
-\begin{verbatim}
+\begin{lstlisting}[language=sparql]
 CONSTRUCT {
             # riscrive con nuova terminologia
             ?album dc:creator dbpedia:The_Beatles
@@ -217,35 +238,32 @@ CONSTRUCT {
             dbpedia:The_Beatles foaf:made   ?album;
             ?album              mo:track    ?track .
           }
-\end{verbatim}
+\end{lstlisting}
   
-Le basi di conoscenza sono interrogate grazie ai vocabolari (anche detti \textit{ontologie}), che permettono quindi la costruzione di query.
+Le basi di conoscenza sono interrogate grazie ai vocabolari (anche detti \textit{ontologie}), che permettono quindi la costruzione di query. Le ontologie ci permettono di conoscere la struttura del \textit{Knowledge Graph} così da poter effettuare interrogazioni più o meno precise. I diversi \textit{Knowledge Graph} sono integrati grazie a predicati come ad esempio (\verb|same as|) che indicano quali entità si riferiscono allo stesso oggetto reale nelle varie fonti.
 
-I dataset sono integrati grazie a predicati (\verb|same as|) che indicano quali entità si riferiscono allo stesso oggetto reale nelle varie fonti.
+SPARQL 1.1, inoltre, permette di integrare un sistema di ragionamento automatico per l'uguaglianza delle entità (introduce il concetto di \textit{entailment}), ovvero un \textit{reasoner} in grado eventualmente anche di inferire conoscenza non direttamente esplicitata nel grafo di conoscenza, ma solo conseguenza dei vincoli e delle proprietà presenti in esso.
 
-SPARQL 1.1 permette di integrare un sistema di ragionamento automatico per l'uguaglianza delle entità (introduce il concetto di \textit{entailment}).
-
-\section{Vocabolari (o ontologie).}
+\section{Vocabolari (i.e. Ontologie)}
 In RDF si ha un modello dei dati che prevede di utilizzare URI per rappresentare sia le risorse sia le proprietà.
 L'uso di URI per specificare proprietà e relazioni definiscono separatamente l'insieme di proprietà e tipi usati per descrivere un dominio: si definisce così un vocabolario per descrivere i dati, che permettono una standardizzazione della tipizzazione del dato.
-Un esempio è il predicato \verb|rdf:type| che introduce un vocabolario che permette di catalogare risorse definendo i tipi di variabile.
-Si definiscono quindi ontologie comuni sfruttabili da più \textit{data provider} per uniformare la rappresentazione dei dati. A tutti gli effetti un vocabolario è riconducibile allo schema dei RDBMS.
 
+Un esempio di ciò è il predicato \verb|rdf:type| che introduce un vocabolario che permette di catalogare risorse definendo i tipi di variabile.
+Si definiscono quindi ontologie comuni sfruttabili da più \textit{data provider} per uniformare la rappresentazione dei dati. A tutti gli effetti un vocabolario è riconducibile allo schema dei RDBMS, dato che lo scopo di un'ontologia, semplificando, è proprio quello di definire lo schema dei dati.
 Per definire un vocabolario si definiscono prima le classi (ovvero i tipi di dato) con proprietà, eventualmente diverse (ovvero usando certe proprietà solo su certe classi).
 
 Uno dei vocabolari più importanti (perché introdotto da tempo) è \textbf{FOAF} (\textit{Friend of a Friend}); si ricordano anche \textbf{DC} (\textit{Dubling Core}), che specifica una serie di predicati per rappresentare i documenti come \textit{titolo, autore} ad esempio, e \textbf{SKOS} (\textit{Simple Knowledge Organizating System}).
-Più vocabolari possono riferirsi allo stesso oggetto e per definizione non è lecito unificare i vocabolari in quanto dovrebbero adattarsi alla specificità del dominio. C'è quindi una certa libertà nel descrivere gli oggetti perchè ognuno può usare vocabolari differenti, portando ad un certo equilibrio nell'entropia del semantic web.
-Alcuni dei più grandi provider internet hanno però unificato vocabolari col progetto \textbf{schema.org}, molto utilizzato nel web e in continua evoluzione per dati strutturati. Sul sito di \textbf{schema.org} sono raccolte tutte le classi disponibili in questo vocabolario e per ogni classe restituisce la specifica delle proprietà per descriverla, oltre a fornirci anche gli \textit{expected type} per i valori di queste proprietà; un concetto, questo, molto importante nella definizione dei vocabolari. 
-Dipendentemente dal task occorre sempre trovare il vocabolario più semplice per coprire tutti i nostri bisogni ed eventualmente, nel caso si rivelasse insufficiente, espanderlo per i nostri bisogni, piuttosto che crearne uno nuovo dal nulla.
-Si possono unire più vocabolari grazie a collegamenti, a livello di istanza o di schema.
+Più vocabolari possono riferirsi allo stesso oggetto e per definizione non è lecito unificare i vocabolari in quanto dovrebbero adattarsi alla specificità del dominio. C'è quindi una certa libertà nel descrivere gli oggetti perchè ognuno può usare vocabolari differenti, portando ad un certo equilibrio nell'entropia del \textit{semantic web}.
 
-Un computer ha bisogno di definire un sistema per attribuire un significato al significante.
-Si possono definire tre\footnote{Esiste un quarto metodo che sarà approfondito più avanti.} sistemi per definire un'ontologia, ovvero un sistema per definire gli oggetti esistenti.
+Alcuni dei più grandi provider internet hanno però unificato vocabolari col progetto \url{schema.org}, molto utilizzato nel web e in continua evoluzione per dati strutturati. Sul sito di \url{schema.org} sono raccolte tutte le classi disponibili in questo vocabolario e per ogni classe restituisce la specifica delle proprietà per descriverla, oltre a fornirci anche gli \textit{expected type} per i valori di queste proprietà; un concetto, questo, molto importante nella definizione dei vocabolari. 
 
-L'uso di sistemi diversi rende complicata l'integrazione di più fonti.
+Dipendentemente dal task occorre sempre trovare il vocabolario più semplice per coprire tutti i nostri bisogni ed eventualmente, nel caso si rivelasse insufficiente, espanderlo all'occorrenza, piuttosto che crearne uno nuovo dal nulla.
+Si possono unire più vocabolari grazie a collegamenti, a livello di istanza o di schema. Un computer ha bisogno di definire un sistema per attribuire un significato al significante.
 
-\subsection{Tesauri.}
-Tra i diversi tipi di ontologie il tesauro è il più obsoleto. Il tesauro può essere definito anche come ontologia lessicale, ovvero i significati delle parole sono esplicitati in termini di relazioni lessicali tra queste.
+Si possono definire tre\footnote{Esiste un quarto metodo che sarà approfondito più avanti.} sistemi per definire un'ontologia, ovvero uno schema per definire gli oggetti esistenti. L'uso di sistemi diversi rende complicata l'integrazione di più fonti.
+
+\subsection{Tesauri}
+Tra i diversi tipi di ontologie il tesauro (anche detto ontologia lessicale) è il più obsoleto. Il tesauro può essere definito anche come ontologia lessicale, ovvero i significati delle parole sono esplicitati in termini di relazioni lessicali tra queste.
 Generalmente definisce sostantivi (semplici o composti), aggettivi e verbi.
 
 Le relazioni lessicali sono:
@@ -258,82 +276,103 @@ Le relazioni lessicali sono:
 \end{itemize}
 Tuttavia esistono dei problemi: i sinonimi non sono mai perfettamente interscambiabili e l'iponimia (o iperonimia) sottintende molte sfumature.
 
-WordNet è un vasto database lessicale sviluppato dagli anni '90 che rappresenta i significati (o concetti) in una struttura ad albero.
-La polisemia è gestita definendo più entità diverse con lo stesso nome.
-Data una parola, si ha quindi un insieme finito di significati distinti tra di loro.
-
-\subsection{Tassonomia.}
-Si definisce un grafo di classificazione gerarchica dei concetti, generalmente con struttura ad albero.
+Alcuni esempi di ontologie lessicali sono:
+\begin{itemize}
+\item \textbf{Tesauri di dominio}
+\item \textbf{EuroWordnet}
+\item \textbf{WordNet} è un vasto database lessicale sviluppato dagli anni '90 che rappresenta i significati (o concetti) in una struttura ad albero. La polisemia è gestita definendo più entità diverse con lo stesso nome. Data una parola, si ha quindi un insieme finito di significati distinti tra di loro.
+\item \textbf{MultiWordnet}
+\end{itemize}
+\subsection{Tassonomia}
+Si definisce tassonomia un grafo di classificazione gerarchica dei concetti, generalmente con struttura ad albero.
 Le tassonomie sono strutture usate in informatica e nello specifico in Data Science, prese in prestito dalla biologia (per classificare le forme viventi), in cui tuttavia sono presenti dibattiti.
 La valenza può anche non essere perfetta ma ha grande importanza in ambito scientifico ed economico.
 Si usa una forma ad albero (per facilitare la condivisione tra varie fonti) i cui nodi sono concetti (ogni nodo può avere un solo padre e uno o più figli).
+
 Il significato è spiegato in classi, superclassi e sottoclassi (relazione di tipo \verb|is-a|) grazie al meccanismo dell'ereditarietà: i nodi più specializzati ereditano le proprietà di quelli più generali.
 È necessario specificare anche quale criterio usare per effettuare la divisione dell'albero.
-Si può anche effettuare una ripartizione dell'oggetto dividendolo nei sotto-oggetti specifici che lo compongono (mereologia), nell'ambito di una relazione \verb|part-of|, ovvero una relazione transitiva e riflessiva .
+Si può anche effettuare una ripartizione dell'oggetto dividendolo nei sotto-oggetti specifici che lo compongono (operazione detta di mereologia), nell'ambito di una relazione \verb|part-of|, ovvero una relazione transitiva e riflessiva .
 
-\subsection{Ontologie assiomatiche.}
-Il significato è attribuito attraverso una serie di assiomi logici per specificare le definizioni dei termini utilizzati, con riferimento alle implicazioni. Le caratteristiche fondamentali di un ontologia sono che essa sia concettuale, esplicita, formale e, caratteristica più importante, \textit{condivisa}: è infatti fondamentale che le descrizioni siano condivise tra individui di un gruppo (\textbf{schema.org} è un esempiio di questo principio)
+\subsection{Ontologie assiomatiche}
+Nelle ontologie assiomatiche il significato è attribuito attraverso una serie di \textit{assiomi logici} per specificare le definizioni dei termini utilizzati, con riferimento alle implicazioni. 
+
+Le caratteristiche fondamentali di un ontologia sono che essa sia:
+\begin{itemize}
+\item Concettuale: deve cioè esserre un modello astratto di un certo fenomeno del mondo reale attraverso l'identificazione dei concetti rilevanti che lo caratterizzano;
+\item Esplicita: i concetti, le proprietà ed i vincoli che caratterizzano un fenomeno devono essere esplicitamente definiti;
+\item Formale: deve cioè essere machine-readable, escludendo l'uso del linguaggio naturale. Il ragionamento automatico è infatti fondamentale per assicurarsi qualità di un'ontologia a design-time, ovvero verificare che i concetti non siano contraddittori ed estrarre conoscenza implicita, e per sfruttare la semantica con lo scopo di inferire conoscenza in fase di ricerca delle informazioni;
+\item \textit{Condivisa}: è infatti fondamentale che le descrizioni siano condivise tra individui di un gruppo (\url{schema.org} è un esempio di questo principio).
+\end{itemize}
+Componenti principali dell'ontologia assiomatica sono:
+\begin{itemize}
+\item \textbf{Concetti o classi}: un concetto può rappresentare un oggetto, una nozione o un'idea. I concetti possono essere astratti o concreti, elementari o composti, reali o fittizi. Un concetto può essere qualsiasi cosa su cui si può dire qualcosa e, perciò, può anche essere la descrizione di un task, una funzione, un'azione, una strategia, un processo di ragionamento;
+\item \textbf{Assiomi}: sono affermazioni, \textit{sempre vere}, sul modello definito dall'ontologia e servono per specificare la semantica dei concetti. Generalmente specificano il modo in cui il vocabolario concettuale (concetti e relazioni) può essere usato.
+\end{itemize}
 Si definisce quindi un linguaggio $L$ di assiomi logici con una semantica formale che determina il significato in modo univoco.
 
-\section{Inferenza nell'ontologia.}
-Definendo un oggetto, si hanno sempre delle implicazioni: è necessario fare inferenza, ovvero si procede con un procedimento deduttivo. L'inferenza (un meccanismo fondamentale della semantica) nasce infatti dal ragionamento su delle premesse, con l'obiettivo di estrarre conoscenza vera da premesse vere, effettuando una generalizzazione con un certo margine di errore.
+\section{Inferenza nell'ontologia}
+Definendo un oggetto, si hanno sempre delle implicazioni: è necessario quindi fare inferenza, ovvero procedere con un procedimento deduttivo per rendere esplicita la conoscenza implicita. L'inferenza (un meccanismo fondamentale della semantica) nasce infatti dal ragionamento su delle premesse, con l'obiettivo di estrarre \textit{conoscenza vera} da \textit{premesse vere}, effettuando una generalizzazione con un certo margine di errore.
 Dal principio dell'informatica, l'uso della logica (proposizionale e del primo ordine) permette la deduzione da parte di calcolatori.
 Oltre all'induzione classica, esistono altre pratiche per fare inferenza.
 Le implicazioni ricavate sulla base di ciò che è definito nel dizionario, dal punto di vista inferenziale, sono la semantica reale delle informazioni.
-L'inferenza ha come obiettivi di ridurre la complessità del sistema trovando un modo per ottenere informazioni velocemente e per aumentare la flessibilità dello schema per poter essere aggiornato in tempo reale con le modifiche dell'ambiente.
 
-\subsection{Schema dell'ontologia.}
-Lo schema prescrive come deve essere organizzato il dato per entrare nel database; tuttavia i dati sono flessibili per loro natura, dunque l'operazione non è immediata.
+L'inferenza ha come obiettivi il ridurre la complessità del sistema trovando un modo per ottenere informazioni velocemente ed il aumentare la flessibilità dello schema per poter essere aggiornato in tempo reale con le modifiche dell'ambiente.
+
+\subsection{Schema dell'ontologia}
+Lo schema prescrive come deve essere organizzato il dato per entrare nel database; tuttavia i dati sono flessibili per loro stessa natura, dunque l'operazione non è immediata.
 È necessario definire uno schema per dare una struttura ai dati: non è lecito usare nell'approccio semantico un database NoSQL troppo flessibile.
-Dall'altro lato rispetto all'approccio relazionale, lo schema semantico è più flessibile: SQL non permette di modificare la struttura una volta dichiarata, usa cioè un approccio \textit{prescrittivo}.
-Quello del semantic web è invece un approccio \textit{deduttivo} (\textit{validazione indiretta}): ovvero non ci dice come devono essere strutturati i dati per essere inseriti, ma quali informazioni possiamo estrarne (validazione indiretta); in sintesi tiene conto del fatto che i dati, nel tempo, possano cambiare.
-Lo schema quindi è flessibile e disaccoppia lo schema dai dati (ovvero lo schema può essere modificato successivamente e ciò potrebbe provocare incoerenze nel breve periodo).
+
+Dall'altro lato però, rispetto all'approccio relazionale, lo schema semantico è più flessibile: SQL non permette di modificare la struttura una volta dichiarata, usa cioè un approccio \textit{prescrittivo}.
+Quello del \textit{semantic web} è invece un approccio \textit{deduttivo}: ovvero non ci dice come devono essere strutturati i dati per essere inseriti, ma quali informazioni possiamo estrarne (validazione indiretta); in sintesi tiene conto del fatto che i dati, nel tempo, possano cambiare.
+Lo schema quindi è flessibile e disaccoppia lo schema dai dati (ovvero lo schema può essere modificato successivamente e ciò potrebbe provocare anche incoerenze nel breve periodo).
 
 Potendo esserci contraddizione nei dati, si sono costruiti linguaggi come RDF Schapes e SHACL che permettono una validazione dei dati attraverso la definizione di vincoli.
 
-\subsection{\textit{Reasoning}.}
-I linguaggi RDFS e OWL permettono l'operazione di \textit{reasoning}, ovvero l'inferenza di nuova conoscenza a partire da più antologie esistenti.
+\section{\textit{Reasoning}}
+I linguaggi RDFS e OWL permettono l'operazione di \textit{reasoning}, ovvero l'inferenza di nuova conoscenza a partire da più ontologie esistenti.
 % il prof sembra che faccia rap col braccio e il microfono
-Oltre ad avere sistemi deduttivi, la logica proposizionale garantisce che l'algoritmo termini (è cioè \textit{decidibile}, ovvero date le premesse è sempre possibile stabilire se una FBF - Formula Ben Formata - è vera o meno), mentre la logica del primo ordine è semi-decidibile.
-Anche con una procedura che termina e confermi la verità di una formula però non è utile in pratica: il tempo impiegato potrebbe essere particolarmente lungo e quindi rendere inutile il programma.
-In caso di linguaggi non decidibili, bisogna semplificare il linguaggio per trovare un compromesso tra tempo impiegato ed espressività: ci sono più linguaggi perchè il compromesso è trovato in modo diverso.
-Inoltre esistono altri linguaggi \textit{a regole}, ovvero linguaggi non puramente logici, ma che vi si ispirano, utilizzabili per fare deduzioni su RDF che sono più efficienti.
+Oltre ad avere sistemi deduttivi, la logica proposizionale su cui sono basati garantisce che l'algoritmo termini (sia, cioè, \textit{decidibile}: ovvero date le premesse è sempre possibile stabilire se una FBF - Formula Ben Formata - è vera o meno), mentre la logica del primo ordine è solo semi-decidibile.
 
-\subsubsection{RDF Schema.}
-RDFS costruisce un \textit{reticolo} che parte da un nodo e garantisce ereditarietà (anche multipla) delle classi: è costruito un \textit{ordine parziale}.
-RDFS introduce implicazioni sul tipo di dato: si introduce un approccio secondo cui il mondo è composto da \textit{classi} e \textit{individui}; quindi si hanno insiemi ed elementi degli insiemi.
-Una classe è composta da individui, i quali tramite \textit{proprietà} entrano in relazione tra di loro; inoltre le relazioni tra classi comportano vincoli sulle relazioni tra individui.
+Anche una procedura che termini e confermi la verità di una formula, però, non è utile in pratica: il tempo impiegato potrebbe essere particolarmente lungo e quindi rendere inutile il programma.
+In caso di linguaggi non decidibili, occorre semplificare il linguaggio per trovare un compromesso tra tempo impiegato ed espressività: l'esistenza di più linguaggi è dovuta al fatto che il compromesso può essere trovato in modo diverso.
+
+Inoltre esistono altri linguaggi \textit{a regole} (rules-based), ovvero linguaggi non puramente logici, ma che vi si ispirano, utilizzabili per fare deduzioni su RDF, che risultano più efficienti per certi tipi di operazioni.
+
+\subsection{RDFS (RDF-Schema)}
+RDFS parte con l'idea di costruire un vero e proprio \textit{reticolo} che parte da un nodo e garantisce ereditarietà (anche multipla) delle classi: è costruito, cioè, un \textit{ordine parziale}.
+
+RDFS introduce inoltre implicazioni sul tipo di dato: si introduce un approccio secondo cui il mondo è composto da \textit{classi} e \textit{individui}; quindi si hanno insiemi ed elementi degli insiemi.
+Una classe è composta da individui i quali, tramite \textit{proprietà}, entrano in relazione tra di loro; inoltre le relazioni \textit{tra classi} comportano vincoli sulle relazioni tra individui, data l'appartenenza di questi ultimi alle classi.
 Questo approccio è coerente con il modello relazionale, e caratterizza in modo molto forte la semantica dei dati strutturati.
-Il concetto di classe vincola l'uso del tipo: una classe non può essere del tipo di un'altra.
 
-I letterali sono divisi esplicitamente dagli URI.
+Il concetto di classe vincola l'uso del tipo: una classe non può essere del tipo di un'altra classe. I letterali sono divisi esplicitamente dagli URI.
 
-Con RDFS si possono rappresentare e vincolare relazioni tra classi, organizzandole in gerarchie: si organizzano così tassonomie che garantiscono nativamente inferenze semplici (con proprietà transitiva).
-Anche le proprietà possono essere organizzate gerarchicamente, con proprietà che derivano da altre (\verb|figlioDi| è sotto-proprietà di \verb|parenteDi|).
+Con RDFS si possono rappresentare e vincolare relazioni tra classi, organizzandole in vere e proprie gerarchie: si organizzano così tassonomie che garantiscono \textit{nativamente} inferenze semplici (dotate, cioè, di proprietà transitiva).
+Anche le proprietà possono essere organizzate gerarchicamente, con proprietà che derivano da altre (come ad esempio: \verb|figlioDi| è sotto-proprietà di \verb|parenteDi|).
 
-La semantica dei predicati è definita da regole, che determinano l'ereditarietà (classi derivate), la transitività di classi e relazioni e simili.
+La semantica dei predicati è definita da regole che determinano l'ereditarietà (classi derivate), la transitività di classi e relazioni.
 
 I predicati \verb|rdfs:domain| e \verb|rdfs:range| indicano che tutti gli oggetti di una classe appartengono anche a un'altra classe.
 Questi due predicati non sono usati in \url{schema.org} perché troppo rigidi. Lo schema non può dedurre contraddizioni, dunque.
 
 Alcuni esempi di quanto detto sono:
 \begin{verbatim}
-se [x sottoclasse di y] 		
+se [x subClassOf di y] 		
 e  [a type x]				 
 allora [a type y] (i tipi si ereditano)
 
-se [x sottoclasse di y]
-e  [y sottoclasse di z]
-allora [x sottoclasse di z] (proprietà transitiva)
+se [x subClassOf di y]
+e  [y subClassOf di z]
+allora [x subClassOf di z] (proprietà transitiva)
 
 se [x a y]
-e  [a sottoproprietà di b]
+e  [a subPropertyOf di b]
 allora [x b y] (i precedenti esempi 
                 valgono anche per le proprietà)
                 
-se [a sottoproprietà di b]
-e  [b sottoproprietà di c]
-allora [a sottoproprietà di c]
+se [a subPropertyOf di b]
+e  [b subPropertyOf di c]
+allora [a subPropertyOf di c]
 
 se [x a y]
 e  [a domain z]
@@ -348,61 +387,159 @@ allora [u type z]
 per l'oggetto, non per il soggetto.)                
 \end{verbatim}
 
-Nonostante tutti i pregi, RDFS presenta alcuni svantaggi: non ha restrizioni locali all'appartenenza di domini, non ha vincoli di cardinalità e le classi non possono essere combinate.
+Nonostante tutti i pregi, RDFS presenta alcuni svantaggi:
+\begin{itemize}
+\item Non ha restrizioni locali all'appartenenza di domini;
+\item Non ha vincoli di cardinalità;
+\item Le classi non possono essere combinate;
+\item Le proprietà non sono transitive, inverse e simmetriche;
+\item Non permette i disjoint;
+\item Non permette combinazioni booleane delle classi.
+\end{itemize}
 OWL è stato introdotto per colmare queste lacune.
 
 
-\subsubsection{SPARQL 1.1.}
-La versione $1.1$ introduce gli \textit{Entailment Regimes}: procedure che calcolano tutte le implicazioni degli assiomi; uno dei sistemi più noti è Virtuoso.
+\subsubsection{SPARQL 1.1}
+La versione $1.1$ di SPARQL, come già accennato, introduce gli \textit{Entailment Regimes}: ovvero procedure che calcolano tutte le implicazioni degli assiomi; uno dei sistemi più noti è Virtuoso.
 I risultati possono essere esportati come \verb|.xml|, \verb|.csv| o \verb|.tsv|.
 
-\subsubsection{OWL.}
-È un motore inferenziale composto da più sotto-linguaggi, con l'obiettivo di ridurre la confusione lasciata da RDFS, tuttavia ne aumenta la complessità computazionale.
-È un linguaggio \textit{formale} (è un linguaggio logico processabile da elaboratori), \textit{esplicito} (non ambiguo) e \textit{condiviso}.
+\subsection{OWL}
+È un motore inferenziale composto da più sotto-linguaggi, con l'obiettivo di ridurre la confusione lasciata da RDFS; tuttavia ne aumenta la complessità computazionale.
+È un linguaggio \textit{formale} (è un linguaggio logico processabile da elaboratori), \textit{esplicito} (non ambiguo) e \textit{condiviso}; gode perciò di tutte le caratteristiche chiave di un'ontologia assiomatica.
+
 OWL2 è diviso in tre progetti:
 \begin{itemize}
   \item OWL 2 EL: limitato a classificazioni di base, ma la complessità è polinomiale;
-  \item OWL 2 QL: usa una sintassi simile a SQL;
-  \item OWL 2 RL: è usato per  essere implementato efficientemente in sistemi \textit{rule-based}.
+  \item OWL 2 QL: che usa una sintassi simile a SQL;
+  \item OWL 2 RL: è usato per  essere implementato efficientemente in sistemi \textit{rules-based}.
 \end{itemize}
-È frequente definire ontologie senza usare tutta la capacità espressiva di OWL.
+È frequente definire ontologie senza usare tutta la capacità espressiva di OWL, ma utilizzando in equilibrio con RDFS per arricchirlo.
 
-Rispetto a RDFS si introduce l'equivalenza tra classi con \verb|owl:equivalentClass| e tra individui con \verb|owl:sameAs|, tuttavia il loro uso ha delle implicazioni semantiche (riflessività, transitività e simmetria); inoltre l'equivalenza può essere fatta anche a livello di proprietà con \verb|owl:equivalentProperty|.
-Si può anche specificare la disgiunzione tra due elementi con \verb|owl:differentFrom|, in opposizione alla UNI (\textit{Unique Name Assumption}), secondo cui oggetti con nomi diversi sono distinti.
+Rispetto a RDFS si introduce l'equivalenza tra classi con \verb|owl:equivalentClass| e tra individui con \verb|owl:sameAs|, tuttavia il loro uso ha delle implicazioni semantiche molto importanti tra le quali:
+\begin{itemize}
+  \item Riflessività;
+  \item Transitività;
+  \item Simmetria.
+\end{itemize}
+Inoltre l'equivalenza può essere fatta anche a livello di proprietà con \verb|owl:equivalentProperty|.
+Si può anche specificare la disgiunzione tra due elementi con \verb|owl:differentFrom|, in opposizione alla UNI (\textit{Unique Name Assumption}), secondo cui oggetti con nomi diversi sono necessariamente distinti.
 Le proprietà possono essere disgiunte con \verb|owl:propertyDisjointWith|.
 
-Le proprietà di OWL sono distinte in due categorie: ObjectProperties (la proprietà è una risorsa) o DatatypeProperties (la proprietà è un letterale); questa distinzione facilita la costruzione di grafi specificando quali proprietà sono utilizzabili per attraversare il grafo.
+Le proprietà di OWL sono distinte in due categorie:
+\begin{itemize}
+  \item \textit{Object Properties}: la proprietà è una risorsa;
+  \item \textit{Datatype Properties}: la proprietà è un letterale. 
+\end{itemize}
+Questa distinzione facilita la costruzione di grafi specificando quali proprietà sono utilizzabili per attraversare il grafo stesso.
+La relazione tra classi e sottoclassi è, matematicamente parlando, un ordinamento parziale: si può costruire un reticolo finito (quindi con limite superiore e inferiore, rispettivamente uguali all'insieme \textit{universo} e all'insieme \textit{vuoto}).
 
-La relazione tra classi e sottoclassi è, matematicamente parlando, un ordinamento parziale: si può costruire un reticolo finito (quindi con limite superiore e inferiore).
-Una relazione in OWL ha le proprietà di simmetria e di transitività; inoltre matematicametne è una funzione (ovvero si ha al più un valore per un argomento), permettendo l'uso di identificativi e di funzioni inverse.
-Quest'ultima proprietà è fondamentale nelle fasi di \textit{Record Linkage} o \textit{Deduplication}.
+Una relazione in OWL può possedere determinate proprietà:
+\begin{itemize}
+  \item \textbf{Simmetria};
+  \item \textbf{Transitività};
+  \item \textbf{Transitività inversa};
+  \item \textbf{Funzionalità}: ovvero si ha al più un valore per un argomento permettendo l'uso di identificativi e di funzioni inverse;
+  \item \textbf{Funzionalità inversa}: quest'ultima proprietà è fondamentale nelle fasi di \textit{Record Linkage} o \textit{Deduplication}.
+\end{itemize}
+%ha le proprietà di simmetria e di transitività; inoltre matematicamente è una funzione (ovvero si ha al più un valore per un argomento), permettendo l'uso di identificativi e di funzioni inverse.%
+%Quest'ultima proprietà è fondamentale nelle fasi di \textit{Record Linkage} o \textit{Deduplication}.%
+%fatto ad elenco secondo me risulta più intuitivo.
 
-Un concetto si dice \textit{soddisfacibile} se esiste almeno una sua interpretazione; invece un concetto si dice \textit{sussunto} a un altro modello se in qualsiasi interpretazione della prima teoria si ha un sottoinsieme della seconda teoria.
-Il concetto di interpretazione in logica quindi è puramente teorico: è lo strumento matematico usato per attribuire un significato ai dati; l'inferenza permette di attribuire significati aggiuntivi indipendentemente dalla semantica iniziale.
-Due concetti si dicono \textit{equivalenti} se l'interpretazione del primo concetto è sempre uguale a quella del secondo in tutte le interpretazioni della teoria; al contrario si dicono \textit{disgiunti}.
+\subsubsection{OWL Description Logic}
+Le logiche descrittive sono una famiglia di logiche usate per rappresentare il grafo di conoscenza e sono state introdotte per lo studio del linguaggio naturale prima del \textit{deep learning}; più una logica è complessa ed espressiva maggiori sono il tempo di esecuzione e la complessità.
 
-È possibile utilizzare il \textit{reasoner} per verificare la correttezza delle relazioni.
-La conoscenza ha senso se è soddisfacibile: una teoria è incosistente se non ha interpretazioni che la rendono vera; caso analogo si verifica quando una classe è sussunta all'insieme vuoto: in tal caso non ha interpretazioni possibili.
-Dal punto di vista pragmatico, con un \textit{reasoner} si verifica la soddisfacibilità della teoria, si inferiscono gerarchie e nuove relazioni e ancora il tipo degli individui.
-
-
-
-\section{Logiche descrittive.}
-Sono una famiglia di logiche usate per rappresentare il grafo di conoscenza; più una logica è complessa ed espressiva maggiori sono il tempo di esecuzione e la complessità.
-Sono state introdotte per lo studio del linguaggio naturale prima del \textit{deep learning}.
-OWL DL (\textit{OWL Descriptive Logic}) si basa su SHIQ (è equivalente a SHOINDn).
-Una logica è composta da una TBox, ovvero l'ontologia della logica, e una ABox (\textit{Assertional Box}), che comprende i dati veri e propri.
-Nelle logiche descrittive la difficoltà è costruire classi complesse (coi relativi costruttori). \newline
+OWL DL (\textit{OWL Description Logic}) si basa su SHIQ (è equivalente a SHOINDn).
+Una logica è composta da una TBox (\textit{Terminological Box}), ovvero l'ontologia della logica, il suo schema, e una ABox (\textit{Assertional Box}), che comprende i dati veri e propri, in forma di asserzioni, che possono essere di due tipi:
+\begin{itemize}
+\item Un individuo appartiene ad una classe;
+\item Due individui sono legati da una relazione.
+\end{itemize}
+Nelle logiche descrittive la difficoltà risiede nel costruire classi complesse (coi relativi costruttori). \newline
+\begin{center}
+	\includegraphics[scale=0.6]{IMG1.png}
+\end{center}
 Una classe può quindi essere definita basandosi su più classi tramite una serie di operatori logici.
-La semantica dunque si definisce ricorsivamente dagli elementi più semplici ai più complicati.
+La semantica dunque si definisce ricorsivamente dagli elementi più semplici ai più complessi.
 
-Gli assiomi usati in queste logiche sono estremamente semplici ma si applicano ugualmente anche a classi più complesse.
+\begin{tabular}{l|cl|l} \newline \newline
+  Costructor & Sintassi DL & Esempio & Sintassi modale \\ \hline
+  intersectionOf & $C_1 \sqcap \ldots \sqcap C_n$  & Human $\sqcap$ Male & $C_1 \wedge \ldots \wedge C_n$ \\
+  unionOf & $C_1 \sqcup \ldots \sqcup C_n$ & Doctor $\sqcup$ Lawyer & $C_1 \vee \ldots \vee C_n$ \\
+  complementOf & $\neg C$ & $\neg$ Male & $\neg{C}$ \\
+  oneOf & $\{x_1\} \sqcup \ldots \sqcup \{x_n\}$ & $\{$ John $\} \sqcup \{$ Mary $\}$ & $x_1 \vee \ldots \vee x_n$ \\
+  allVeluesFrom & $\forall P.C$ & $\forall$ hasChild.Doctor & $[P]C$ \\
+  someValuesFrom & $\exists P.C$ & $\exists$ hasChild.Doctor & $(P)C$ \\
+  maxCardinality & $\leq nP$ & $\leq 1$ hasChild & $[P]_n + 1$ \\
+  minCardinality & $\geq nP$ & $\geq 2$ hasChild & $(P)_n$ \\
+\end{tabular} \newline \newline
+Dove $C$ è un concetto, $P$ una proprietà e $x$ un individuo. \newline
+%\begin{center}
+%\includegraphics[scale=0.6]{IMG2.png}
+%\end{center}
+L'\textit{interpretazione} dei costrutti è di natura insiemistica:
+\begin{center}
+\begin{tabular}{rcl} \newline \newline
+  $(C \sqcap D)^I$ & $=$ & $C^I \sqcap D^I$ \\
+  $(C \sqcup D)^I$ & $=$ & $C^I \sqcup D^I$ \\
+  $(\neg{C})^I$ & $=$ & $\Delta^I \backslash C^I$ \\
+  $\{x\}^I$ & $=$ & $\{x^I\}$ \\
+  $(\exists R.C)^I$ &$=$& $\{x | \exists y.<x,y> \in R^I \wedge y \in C^I\}$ \\
+  $(\forall R.C)^I$ &$=$& $\{x | \forall y.(x,y) \in R^I \Rightarrow y \in C^I\}$ \\
+  $(\leq R)^I$ &$=$& $\{x | \# \{y | <x,y> \in R^I\} \leq n\}$ \\
+  $(\geq R)^I$ &$=$& $\{x | \# \{y | <x,y> \in R^I\} \geq n\}$ \\
+  $(R^-)^I$ &$=$& $\{(x,y) | (y,x) \in R^I\}$
+\end{tabular} \newline \newline
+\end{center}
+Dove $\Box^I$ indica l'interpretazione di $\Box$ secondo la funzione $I$. \newline
+%\begin{center}
+%\includegraphics[scale=0.6]{IMG3.png}
+%\end{center}
+Gli assiomi usati in queste logiche sono estremamente semplici ma si applicano ugualmente anche a classi più complesse. Avendo infatti complicato le classi (ovvero avendo definito alcune classi come risultati di costruzioni sfruttando classi più basilari), possiamo ottenere assiomi più \textit{semplici}:
+\begin{center}
+\includegraphics[scale=0.6]{IMG4.png}
+\end{center}
+Possiamo dunque definire un'\textit{interpretazione} anche per gli assiomi oltre che per le classi.
+L'interpretazione $I$ di un assioma soddisfa l'assioma A ($I \models A$) solamente se sono rispettate alcune regole: con una teoria logica composta da assiomi, se ne possono avere un'infinità di interpretazioni, ma ogni assioma riduce l'insieme di interpretazioni possibili, poichè ogni assioma aggiuntivo rappresenta un'ulteriore vincolo sull'ontolgia.
 
-L'interpretazione $I$ di un assioma soddisfa l'assioma A ($I \models A$) solamente se sono rispettate alcune regole: con una teoria logica composta da assiomi, se ne possono avere un'infinità di interpretazioni ma ogni assioma riduce l'insieme di interpretazioni possibili.
-Un'ontologia ha esattamente questo compito: ridurre il numero di interpretazioni e permettere l'inferenza.
+Un'ontologia ha esattamente questo compito: ridurre il numero di interpretazioni (riducendo così l'ambiguità) e permettere l'inferenza.
+\begin{center}
+\includegraphics[scale=0.65]{IMG5.png}
+\end{center}
+Un concetto si dice:
+\begin{itemize}
+\item \textit{Soddisfacibile} se esiste almeno una sua interpretazione; 
+\item \textit{Sussunto} a un altro concetto se qualsiasi interpretazione del primo concetto è sottoinsieme di un interpretazione del secondo;
+\item Due concetti si dicono \textit{equivalenti} se l'interpretazione del primo concetto è sempre uguale a quella del secondo in tutte le interpretazioni della teoria, al contrario si dicono \textit{disgiunti}.
+\end{itemize}
+Il concetto di interpretazione in logica quindi è puramente teorico: è lo strumento matematico usato per attribuire un significato ai dati; l'inferenza permette di attribuire significati aggiuntivi indipendentemente dalla semantica iniziale.
+
+È possibile utilizzare un \textit{reasoner} per verificare la correttezza delle relazioni.
+La conoscenza ha senso solo se è \textit{soddisfacibile}: una teoria è incosistente se non ha interpretazioni che la rendono vera; caso analogo si verifica quando una classe è \textit{sussunta} all'insieme \textit{vuoto}: in tal caso non ha interpretazioni possibili.
+
+Da un punto di vista pragmatico, con un \textit{reasoner} possiamo:
+\begin{itemize}
+\item Fare un check di consistenza;
+\item Inferire nuove relazioni;
+\item Inferire gerarchie;
+\item Ereditare proprietà;
+\item Inferire la classe degli individui.
+\end{itemize}
+In proposito ad OWL \textit{DL} occorre specificare una distinzione molto netta tra:
+\begin{itemize}
+\item Assunzione del \textit{mondo chiuso}, tipica dei database relazionali, per cui tutto ciò che è al di fuori del database è da ritenersi falso;
+\item Assuzione del \textit{mondo aperto}, tipica di ontologie e logiche descrittive, per cui tutto ciò che è fuori \textit{potrebbe} essere vero tanto quanto ciò che è dentro.
+\end{itemize}
+Inoltre sempre riguardo OWL, in quanto base di conoscenza, occorre fare riferimento all'assuzione denominata \textbf{Unique Name Assumption}, che in OWL appunto non ha valore, poichè due oggetti con lo stesso nome possono indicare due cose distinte, non necessariamente essere la stessa cosa.
+
+\subsection{Rule based reasoning}
+I rules-based reasoning, a differenza dell'OWL reasoning permettono di definire delle funzioni al loro interno in grado ad esempio di effettuare ragionamenti di natura quantitativa. 
+
+SWRL (Semantic Web Rule Language) è un linguaggio rules-based che combina OWL con RuleML, ma non è \textbf{decidibile}.
+Alternativo a SWRL in questo aspetto è DLP, un linguaggio che permette di instaurare delle relazioni d'ordine per gli oggetti, come ad esempio \textit{antenato-genitore}.
+RuleML (Rule Markup Language) è una famiglia di linguaggi sviluppati per esprimere sia regole \textit{forward} che \textit{backward} in XML per effettuare deduzioni ed operazioni inferenziali.
 
 
-\section{\textit{Search Engine} semantici.}
+\section{\textit{Search Engine} semantici}
 Un \textit{search engine} semantico sfrutta una base di conoscenza per effettuare delle query più mirate.
 Per la gestione di pattern di architettura ci sono tre possibili approcci:
 \begin{itemize}
@@ -412,28 +549,184 @@ Per la gestione di pattern di architettura ci sono tre possibili approcci:
 \end{itemize}
 Anche per il \textit{reasoner} ci sono strategie diverse.
 
-\section{\textit{Semantic Framework}.}
-Si usano dei framework per archiviare i dati in grafi per la facilità della gestione delle relazioni (si interroga per ottenere nuova conoscenza).
-
-\subsection{RDF4J.}
-È un framework per Java per gestire, archiviare (in diversi modi) e interrogare documenti RDF, organizzando tramite un paradigma ad oggetti.
-
-\subsection{Apache Jena.}
-È un'api per RDF, offre un reasoner organizzando i dati ad oggetti.
-
-\subsection{\textit{Triplestore}.}
-Un \textit{triplestore} archivia le triple e le filtra per elementi fissati.
-Non ha una struttura interna.
-
-
-
+\section{\textit{Semantic Framework}}
+Si usano dei framework per archiviare i dati in grafi per la facilità della gestione delle relazioni (si interroga per ottenere nuova conoscenza):
+\begin{itemize}
+\item \textbf{RDF4J} è un framework per Java per gestire, archiviare (in diversi modi) e interrogare documenti RDF, organizzando tramite un paradigma ad oggetti;
+\item \textbf{Apache Jena} è un'api per RDF, offre un reasoner organizzando i dati ad oggetti;
+\item Un \textbf{triplestore} archivia le triple e le filtra per elementi fissati ed è fatto per ricevere query SPARQL. Ci permette di fare inferenza per mezzo di reasoner o entailment ma non ha struttura interna, poichè non ha struttura per le proprietà. Alcuni esempi di triplestore sono \textit{Openlink Virtuoso}, che permette di avere più grafi e di avere quindi strutture quadruple e non triple e \textit{AllegroGraph};
+\item \textbf{Property Graph} a differenza del triplestore ha una struttura interna a costo però di perdere la possibilità di effettuare inferenza. Alcuni esempi di property graph sono \textit{GraphDB8} e \textit{Neo4j}.
+\end{itemize}
+Tra i reasoner più conosciuti vi sono:
+\begin{itemize}
+\item Pellet (OWL DL);
+\item Racer (OWL DL);
+\item Hermit;
+\item Reasoner nativi di Jena, GraphDB8 e AllegroGraph.
+\end{itemize}
 
 \newpage
-\part{Esercitazioni.}
+\part{Problemi di matching ed integrazione semantica}
+\section{Integrazione di grafi di conoscenza}
+L'integrazione virtuale (l'uso di predicati \verb|sameAs| e simili) non è una funzione particolarmente scalabile con grossi database: per fare questo è necessario effettuare un'integrazione in altro modo (\textit{data integration}).
+La \textit{data integration} nel caso dei grafi di conoscenza parte da una base di diversi oggetti, nel caso più semplice una \textit{source} ed un \textit{target}, che è necessario unire per aumentare il potere informativo creando un unica base di conoscenza più ampia e completa. Per effettuare con successo questa operazione è però necessario usare dei \textit{mapping}.
 
-\section{SPARQL.}
+L'operazione di \textit{linking data} avviene a due livelli distinti:
+\begin{itemize}
+\item A livello di schema: effettuando un \textit{mapping} tra concetti e proprietà (anche detto \textit{ontology mapping}); \item A livello di istanze: ovvero effettuando un \textit{mappping} tra entità descrittive in sorgenti eterogenee. Ciò può avvenire tramite \textit{entity co-resolution} (\verb|sameAs|), \textit{link discovery}, \textit{instance matching} o \textit{record linkage}).
+\end{itemize}
+Quando si costruisce un grafo di conoscenza (soprattutto verticale, ovvero su un solo tema ma in modo approfondito), si parte innanzitutto da un'operazione di \textit{data ingestion}. 
+
+Generalmente questa operazione avviene da fonti di dati strutturate o semi-strutturate come tabelle o database relazionali.
+Si può effettuare una traduzione semantica della tabella (\textit{mapping}) per convertire una tabella in formato RDF, però facendo questo si trascurano le relazioni e le loro proprietà e non si ha controllo sugli elementi duplicati. Un tool molto usato per assolvere a questo compito di conversione da formato tabellare ad RDF è \textbf{DataGraft}.
+
+La trasformazione da tabelle a \textit{Knowledge Graph} può presentare una serie di criticità che occorre affrontare predendo determinati accorgimenti:
+\begin{itemize}
+\item Normalizzare la tabella;
+\item Annotare i diversi componenti della tabella con i componenti del \textit{KG}, sia a livello di schema assegnando concetti e proprietà alle colonne, sia a livello di istanze assegnando entità ai valori della tabella;
+\item Si possono usare strumenti quali R2ML per annotare le tuple del database relazionale e mappandole con programmi scritti \textit{ad hoc}. Questo avviene per operazioni di \textit{mapping} particolarmente complesse. Gli strumenti di \textit{semantic table annotation and integration} tentano di stabilire quali entità esistono in un database e aiutano nella costruzione di un grafo di conoscenza;
+\item Solo dopo questi accorgimenti e passaggi è possibile eseguire il \textit{mapping} finale e rappresentare il contenuto della tabella come \textit{KG}.
+\end{itemize}
+Un altro modo per accrescere un grafo di conoscenza è quello di processare testi (prendento informazioni dall'abstract di \url{wikidata.org}, per esempio): strutturare informazioni in formato tabellare è un processo lungo e costoso, dunque è indispensabile sfruttare tecniche di \textit{Natural Language Processing} (NLP) per estrarre informazioni direttamente da testi, tweet, abstract; tuttavia l'uso di abbreviazioni o espressioni gergali rende difficile un processo automatico del testo.
+Da una parte il problema è strutturare informazioni da un testo (\textit{information extraction}), tipico caso di studio di intelligenze artificiali e semantica computazionale, mentre dall'altra è difficile rendere utile l'informazione estratta integrandola all'interno della base di conoscenza.
+Gli obiettivi dell'estrazione delle informazioni sono la \textit{named entity recognition} e la \textit{relation extraction}: la prima serve per riconoscere un'entità di un testo, mentre la seconda tenta di stabilire le relazioni tra queste entità.
+Per integrare le entità in un grafo di conoscenza, si effettua un'opearazione di \textit{entity linking}.
+
+\subsection{Matching}
+L'operazione di matching può risultare molto complessa a seconda del caso specifico e necessita di una serie di passaggi:
+\begin{itemize}
+\item Per prima cosa, occorre valutare la \textit{similarità} tra due entità appartenenti a fonti diverse tramite un opportuno indice; il problema (nei sistemi classici) tuttavia è trovare un criterio di similarità opportuno poichè a seconda del problema specifico la misuradi similarità più opportuna potrebbe variare.
+\item Successivamente occorre combinare i risultati in modo ottimale: ogni indice si sofferma su un aspetto diverso del problema e devono essere combinati in modo opportuno.
+Questo processo è fondamentale per interrogare diverse basi di dati con una sola query.
+Di fatto quest ultimo problema è risolto tramite tecniche di apprendimento automatico (\textit{machine learning} o \textit{deep learning}), che ricavano una funzione di sintesi in modo automatico.
+\item Combinati i valori, si ha comunque un problema di decisione (cosa includere nel grafo di conoscenza), introducendo un valore di soglia o tramite tecniche di ottimizzazione, o ancora tramite tecniche di apprendimento automatico.
+\end{itemize}
+In rarissimi casi tuttavia un algoritmo riuscirebbe a ottenere prestazioni pari a quelle umane: integrando grandi quantità di dati l'automatizzazione è necessaria ma situazioni critiche richiedono l'intervento umano.
+Si deve quindi trovare un compromesso tra automatizzazione e intervento umano grazie all'\textit{interattività}, soprattutto in caso di risultato incerto. 
+
+Oltre tutto ciò occorre anche definire che tipo di similarità stiamo ricercando, poichè ne esistono di diveri tipi:
+\begin{itemize}
+\item Similarità sintattica, per cui si ricerca un'uguaglianza tra due parole che hanno la stessa forma, ma questo presta il fianco alla possibilità di effettuare un matching errato assumendo che due parole uguali rappresentino sicuramente la stessa cosa;
+\item Similarità lessicale, basata sui sinonimi, che però rischia di creare molta ambiguità;
+\item Similarità strutturale, che tiene conto di come gli oggetti che intendiamo matchare siano inseriti nelle rispettive strutture, ma a seconda delle basi di dati potremmo trovare strutture completamente differenti e, a quel punto, questo particolare tipo di similarità provocherebbe molti problemi.
+\end{itemize}
+L'approccio \textit{pay as you go} tenta di integrare dando una priorità ai dati, che nel tempo saranno consolidati e modificati: così facendo si possono automatizzare dei processi, offrendo un risultato sporco, in attesa di una rifinitura umana.
+
+%La \textit{similarità lessicale} è la prossimità tra il significato di due parole; si usano anche sistemi basati sull'analisi di dati.
+%Due proprità possono anche essere simili perchè collegano entità dello stesso tipo (stesso range e stesso dominio).
+%Tuttavia si hanno delle difficoltà dovute alla polisemia dei termini: proprio per questo, il problema non è trovare l'algoritmo perfetto ma trovare la combinazione migliore tra più criteri.
+Si tenta di sfruttare le stesse ontologie per fonti diverse, nonostante questo non sia sempre possibile (perchè di fatto possono essere preferiti linguaggi propri anche con \textit{open data}).
+
+\subsection{Ontology matching: \textit{Agreement Maker}}
+Come già detto, l'\textit{ontology matching} è il task che ha l'obiettivo di troavare corrispondenze tra entità appartenenti ad ontologie differenti. A questo proposito \textit{Agreement Maker} è un \textit{tool} per aiutare esperti di dominio proprio nel processo di \textit{ontology matching} (ovvero matching a livello di schema): è considerato uno dei migliori esistenti a livello internazionale.
+
+I metodi utilizzati dal software possono essere diversi:
+\begin{itemize}
+\item \textit{Concept based}
+\item \textit{Structure based}
+\item \textit{Instance based}
+\end{itemize}
+Si tenta quindi di costruire delle corrispondenze tra termini appartenenti a ontologie diverse: la prima si chiama \textit{source ontology} che si allinea alla \textit{target ontology}.
+Mappando la \textit{source ontology} si calcola un valore di confidenza per il processo di matching; inoltre si può stabilire la cardinalità tra sorgente e obiettivo: una cardinalità \verb|1:1| stabilisce una relazione unica tra due entità, così come \verb|1:n| stabilisce un rapporto per cui ad un'entità della fonte ne corrispondono più nell'obiettivo.
+
+In sostanza il software esegue la definizione dei matching seguendo dei passaggi precisi:
+\begin{enumerate}
+\item Prende in input la \textit{source ontology} e la \textit{target ontology};
+\item Effettua il calcolo della misura di similarità scelta;
+\item Costruisce una matrice di similarità;
+\item Applica i vincoli di cardinalità;
+\item Infine definisce i matching risultanti.
+\end{enumerate}
+\begin{center}
+\includegraphics[scale=0.7]{IMG6.png}
+\end{center}
+Il software nella versione normale calcola una matrice di similarità di dimensioni $N \times M$ (dove $N$ ed $M$ sono le cardinalità delle due ontologie) usata per individuare relazioni di equivalenza.
+Si effettua un \textit{match} solamente sugli elementi che superano una certa soglia.
+Le dimensioni della matrice però degenerano velocemente e quindi la gestione della memoria è ardua: la versione \textit{lite} tuttavia conserva in memoria solamente i valori superiori alla soglia, così da ridurre la memoria utilizzata.
+
+Gli indici utilizzati sono:
+\begin{itemize}
+\item La \textit{precision} $P = \frac{TP}{TP+FP}$ (dove $TP$ sono i valori classificati correttamente come positivi e $FP$ i valori classificati scorrettamente come positivi);
+\item La \textit{recall} $R = \frac{TP}{TP+FN}$ (dove $FN$ sono i valori classificati scorrettamente come negativi);
+\item La loro media armonica \textit{F-measure} $F =2 \frac{P \cdot R}{P+R}$
+\end{itemize}
+Queste misure sono usate in \textit{machine learning} per misurare la bontà di adattamento di un classificatore generico. 
+
+Il processo attraverso cui Agreement Maker (come altri tool) sottopone i dati si articola su 3 livelli, che a loro volta si articolano nell'utilizzo e nella combinazione dei risultati di più matcher basati su aspetti differenti tra loro:
+\begin{itemize}
+\item \textbf{First layer}: concettuale
+\begin{itemize}
+\item BSM Base Similarity Matcher
+\item PSM Parametric String-based Matcher
+\item VMM Vector-based Multi-term Matcher
+\end{itemize}
+\item \textbf{Second layer}: strutturale
+\begin{itemize}
+\item DSI Descendant's Similarity Inheritance
+\item SSC Sibling's Similarity Contribution
+\end{itemize}
+\item \textbf{Third layer}
+\begin{itemize}
+\item LWC Linear Weighted Combination
+\end{itemize}
+\end{itemize}
+Con particolare riferimento al \textbf{VMM}, un testo è riassunto come insieme di termini, costruendo documenti virtuali per gli oggetti da comparare con pesi preimpostati: si calcola quindi la \textit{cosine similarity} usando le frasi come vettori:
+\begin{equation*}
+\cos(\theta) = \frac{A \cdot B}{\vert\vert A \vert\vert \cdot \vert\vert B \vert\vert}
+\end{equation*}
+Al secondo livello, prendendo in input i risultati dei matcher precedenti e basandosi sul principio che la similarità è ereditabile e può anche essere comparata tra nodi fratelli, si possono calcolare indici come il \textbf{DSI} ed il \textbf{SSC}, entrambi basati sul prendere in input i risultati del \textbf{BSM}.
+
+L'indice $DSI \in [0; +1]$ modifica la similarità base tenendo conto della similarità dei nodi ascendenti.
+\begin{equation*}
+  DSI = MCP \cdot bas\_sim(C, C^*) + \frac{2(1 - MCP)}{n \cdot (n + 1)} \sum_{i=1}^n(n + 1 - i) \cdot base\_sim(parent_{C_i}, parent_{C^*_i})
+\end{equation*}
+Dove \textit{MCP}, il \textit{main contribution percentage}, empiricamente è un valore intorno a $0.75$ in quanto la similarità dei nodi ascendenti tende a $0.25$. \newline
+
+L'indice SSC invece modifica la similarità base considerando la similarità tra i nodi fratelli:
+\begin{equation*}
+  SSC = MCP \cdot bas\_sim(C, C^*) + \frac{1-MCP}{n}\sum_{i=1}^n{\max\{base\_sim(S_i, S_1) ... base\_sim(S_i, S_m)\}}
+\end{equation*}
+Sia in riferimento ai valori di misure come \textit{Precision} e \textit{Recall}, che in merito a tempi di esecuzione, l'indice \textit{DSI} si dimostra spesso il migliore.
+
+Una volta superata la fase di calcolo della similarità e di creazione della corrispondente matrice occorre passare attraverso la fase di \textit{selezione} dei mappings che prende in input:
+\begin{itemize}
+\item Matrice di similarità;
+\item Un valore soglia definito dall'utente;
+\item Una cardinalità per le corrispondenze tra source e target.
+\end{itemize}
+Per assolvere a questo scopo, con particolare riferimento a relazioni di cardinalità 1:1, è spesso utilizzato il sisterma \textit{greedy}: tuttavia questo massimizza solamente il match del singolo elemento e non complessivamente; si tratta di un problema di \textit{assegnamento}, risolvibile tramite metodi combinatori (\textit{Hungarian Method}, di complessità cubica) ma molto pesanti computazionalmente.
+Approccio ottimale per risolvere il problema è selezionare solamente i match che superano una certa soglia e utilizzare l'algoritmo \textit{maximum matching}, che ha complessità quadratica (e quindi computazionalmente più efficiente).
+Proprio per questo motivo, Agreement Maker nella sua versione Lite conserva una matrice di similarità sparsa.
+
+Grazie a tecniche di \textit{machine learning} si possono calcolare soglie, combinazioni lineari tra i \textit{matcher} o ancora costruire \textit{matcher} nuovi (nonostante sia richiesta una gran quantità di esempi).
+
+Un approccio molto diffuso, alternativo alla semplice combinazione dei risultati dei diversi matcher, per rendere il matching più affidabile e snello è quello della combinazione dei risultati dei matcher basata però sulla qualità del matching stesso. Un esempio di misura di qualità, se è noto, è un \textit{gold standard} (ovvero un esempio i cui risultati sono già noti). Molto raramente si presenta questa possibilità ed è quindi necessario ricorrere a misure di qualità differenti:
+\begin{itemize}
+\item A livello globale abbiamo più che delle misure, delle vere e proprie euristiche: quella di conservazione della distanza che si basa sul fatto che un match \textit{F} tra due concetti in due ontologie non dovrebbe distorcere la distanza che c'è tra i concetti stessi e quella di conservazione dell'ordine che afferma la stessa cosa ma in merito all'ordine che i concetti possiedono all'interno delle rispettive ontologie;
+\item A livello locale con il calcolo di una vera e propria misura di confidenza.
+\end{itemize}
+Un buon \textit{matcher} dovrebbe dare un'alta affidabilità a pochi collegamenti, e dovrebbe restituire un'affidabilità nulla in caso di elementi non compresi nell'ontologia.
+Inoltre, può capitare che certi concetti siano identificati meglio di altri: si calcola così il livello di confidenza locale
+\begin{equation*}
+  LC_M(c) = \frac{\sum_{c' \in m_M(c)}sim_M(c, c')}{|m_M(c)|} - \frac{\sum_{c' \in (T - m_M(c))}sim_M(c, c')}{|T - m_M(c)|}
+\end{equation*}
+Il livello di confidenza così calcolato a livello locale ci permette di definire dei pesi basati sulla qualità dei matching dei singoli matcher e, una volta definiti i pesi, di utilizzarli per combinare i risultati dei diversi matcher in una vera e propria media pesata \textit{LWC}. A questo punto, sulla scia di quanto detto in precedenza, si può procedere a calcolare i diversi indici già noti, come il \textit{DSI}. In sostanza l'approccio basato sulla qualità ha lo scopo primario di dare un peso diverso all'apporto di ogni matcher sul risultato finale basandosi sulla qualità del matcher misurata \textit{localmente}.
+\newline
+\newline
+Quanto detto finora vale soprattutto per il matching e la valutazione di ontologie reali molto grandi ma esistono tutta una serie di task analoghi che presentano ancora molte criticità e sfide:
+\begin{itemize}
+\item Per le ontologie \textit{linked open data} le cose sono più complesse;
+\item Cross-lingual ontology matching;
+\item Metodi di matching interattivi;
+\item Semantic table annotation.
+\end{itemize} 
+%ho aggiunto quest'ultima parte anche se il professore non sembrava particolarmente interessato ad approfondirla, ma magari più avanti la riprenderà.
+\newpage
+\part{Esercitazioni}
+
+\section{SPARQL}
 Si interroga \url{https://dbpedia.org} per ottenere una lista di vulcani:
-\begin{verbatim}
+\begin{lstlisting}[language=sparql]
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX dbo: <http://dbpedia.org/ontology/>
 
@@ -443,12 +736,12 @@ SELECT distinct ?v
          ?v rdf:type dbo:Volcano .
        }
  LIMIT 100
-\end{verbatim}
+\end{lstlisting}
 I prefissi si aggiungono inserendo l'url tra simboli \verb|<| e \verb|>|.
 \verb|rdf:type| può essere sostituito da una \verb|a|:
-\begin{verbatim}
+\begin{lstlisting}[language=sparql]
 ?v a dbo:Volcano .
-\end{verbatim}
+\end{lstlisting}
 
 Una query SPARQL è strutturata specificando:
 \begin{itemize}
@@ -460,9 +753,9 @@ Una query SPARQL è strutturata specificando:
 \end{itemize}
 Le specifiche SPARQL possono essere ottenute all'indirizzo \url{https://www.w3.org/TR/rdf-sparql-query/}
 
-\subsection*{Esercizio 1.}
+\subsection*{Esercizio 1}
 Si tenta di trovare il numero di dipendenti Google dalla pagina \url{http://dbpedia.org/page/Google}:
-\begin{verbatim}
+\begin{lstlisting}[language=sparql]
 PREFIX res: <http://dbpedia.org/resource/>
 PREFIX dbo: <http://dbpedia.org/ontology/>
 
@@ -472,28 +765,28 @@ SELECT ?num
          res:Google dbo:numberOfEmployees ?num .
        }
 
-# o più semplicemente:
+# o piu` semplicemente:
 SELECT ?num
   FROM <http://dbpedia.org>
  WHERE {
          dbr:Google dbo:numberOfEmployees ?num .
        }
-\end{verbatim}
+\end{lstlisting}
 
-\subsection*{Esercizio 2.}
+\subsection*{Esercizio 2}
 Si cerca di ottenere una lista di trombettisti leader di band:
-\begin{verbatim}
+\begin{lstlisting}[language=sparql]
 SELECT ?person
  WHERE {
-       # soggetto   proprietà       oggetto
+       # soggetto   proprieta`      oggetto
          ?person    dbo:instrument  dbr:Trumpet .
          ?person    dbo:occupation  dbr:Bandleader .
        }
-\end{verbatim}
+\end{lstlisting}
 
-\subsection*{Esercizio 3.}
+\subsection*{Esercizio 3}
 Si cercano i Paesi con più di due grotte:
-\begin{verbatim}
+\begin{lstlisting}[language=sparql]
   SELECT ?country
    WHERE {
            ?cave     rdf:type      dbo:Cave .
@@ -502,11 +795,11 @@ Si cercano i Paesi con più di due grotte:
          }
 GROUP BY ?country
   HAVING (COUNT(?cave) > 2)
-\end{verbatim}
+\end{lstlisting}
 
-\subsection*{Esercizio 4.}
+\subsection*{Esercizio 4}
 Si vogliono trovare tutti i software sviluppati da società californiane.
-\begin{verbatim}
+\begin{lstlisting}[language=sparql]
 SELECT DISTINCT ?software
  WHERE {
          ?company rdf:type dbo:Organisation .
@@ -518,76 +811,76 @@ SELECT DISTINCT ?software
          ?software rdf:type dbo:Software .
          ?company dbo:foundationPlace dbr:California .
        }
-\end{verbatim}
+\end{lstlisting}
 
-\subsection*{Esercizio 5.}
+\subsection*{Esercizio 5}
 Verificare se Natalie Portman è nata negli Stati Uniti:
-\begin{verbatim}
+\begin{lstlisting}[language=sparql]
   ASK
 WHERE {
         dbr:Natalie_Portman dbo:birthPlace ?city .
         ?city dbo:Country dbr:United_States .
       }
-\end{verbatim}
+\end{lstlisting}
 
-\subsection*{Esercizio 6.}
+\subsection*{Esercizio 6}
 Verificare se Roma è la capitale d'Italia:
-\begin{verbatim}
+\begin{lstlisting}[language=sparql]
   ASK 
 WHERE {
         dbr:Italy dbo:capital dbr:Rome .
       }
-\end{verbatim}
+\end{lstlisting}
 
-\subsection*{Esercizio 7.}
+\subsection*{Esercizio 7}
 Verificare se è disponibile la data di nascita di Elizabeth Taylor.
-\begin{verbatim}
+\begin{lstlisting}[language=sparql]
   ASK
 WHERE {
         dbr:Elizabeth_Taylor dbo:birthDate ?_ .
       }
-\end{verbatim}
+\end{lstlisting}
 
-\subsection*{Esercizio 8.}
+\subsection*{Esercizio 8}
 Verificare se Milano è in Germania.
-\begin{verbatim}
+\begin{lstlisting}[language=sparql]
   ASK
 WHERE {
         dbr:Germany dbo:city dbr:Miland .
       }
-\end{verbatim}
+\end{lstlisting}
 
-\subsection*{Esercizio 9.}
+\subsection*{Esercizio 9}
 Verificare se Michelle Obama è sposata con Barack Obama.
-\begin{verbatim}
+\begin{lstlisting}[language=sparql]
   ASK
 WHERE {
         dbr:Michelle_Obama dbo:spouse dbr:Barack_Obama .
       }
-\end{verbatim}
+\end{lstlisting}
 
-\subsection*{Esercizio 10.}
+\subsection*{Esercizio 10}
 Si cercano i giocatori di Football americano che pesano più di 100kg.
-\begin{verbatim}
+\begin{lstlisting}[language=sparql]
 CONSTRUCT {
             ?x rdf:type dbo:AmericanFootballPlayer .
           }
-i    WHERE {
+    WHERE {
             ?x dbo:weight ?kg .
             FILTER(?kg > 1000000000)
           }
-\end{verbatim}
+\end{lstlisting}
 
 
-\section{Protégé.}
+\section{Protégé}
 Progetto \textit{Open Source} per gestire ontologie, permette di caricare direttamente l'ontologia di \url{dbpedia.org} o di \url{schema.org}.
 DBPedia usa più di $400$ classi, usandone anche di \textit{sporche} (ovvero ripetute o poco utili).
 Usando il \textit{reasoner}, sono evidenziate le incongruenze (ovvero classi inconsistenti), che non possono avere dunque istanze.
 
-\subsection*{Costruzione di un'ontologia.}
+\subsection*{Costruzione di un'ontologia}
 Si costruisce una semplice ontologia per la costruzione di un semplice domino geografico.
 \begin{verbatim}
-City  <  Region  <  Country  <  Continent
+                  City  <  Region  <  Country  <  Continent
 \end{verbatim}
 In Protégé, si definisce una nuova ontologia con \verb|File > New| e inserendo poi sottoclassi di \verb|owl:Thing|.
 Popolata l'ontologia con delle istanze arbitrarie, si definiscono le proprietà.
